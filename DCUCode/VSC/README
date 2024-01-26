@@ -1,0 +1,6 @@
+/*文件结构*/
+VSC/
+├──vsc_main.cpp
+├──vsc_func.cpp
+├──vsc_func.h
+└──README
