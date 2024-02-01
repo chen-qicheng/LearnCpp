@@ -32,17 +32,19 @@
 ###########################
 CXX = g++
 TARGET = main
-SRC = $(wildcard *.cpp) #wildcard:通配符
+SRC = $(wildcard $(SOURCE)/*.cpp) #wildcard:通配符
 OBJ = $(patsubst %.cpp, %.o, $(SRC)) #patsubst：模式转换
+CXXFLAGS = -c -Wall#-Wall: Warning all
 
-CXXFLAGS = -c -Wall #-Wall: Warning all
+SOURCE = ./source
+INCLUDES = -I ./include 
 
 $(TARGET): $(OBJ)
-	$(CXX) -o $(TARGET) $(OBJ)
+	$(CXX) -o $(TARGET) $(OBJ) 
 
 %.o :%.cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@ 
 
 .PHONY: clean #.PHONY代表伪目标，防止有余clean同名文件
 clean:
-	rm -f *.o $(TARGET)
+	rm -f $(SOURCE)/*.o $(TARGET)

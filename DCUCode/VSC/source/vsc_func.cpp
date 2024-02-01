@@ -7,3 +7,9 @@ int SVC_Init()
     printf("auther is Jack!\n");   
     return 0;
 }
+
+int VSC_CheckTCPConnectStatus()
+{
+    
+    return 0;
+}
