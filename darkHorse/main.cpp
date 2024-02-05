@@ -9,23 +9,39 @@
 
 int main (int argc, char **argv)
 {
-    google::InitGoogleLogging(argv[0]);//Ê¹ÓÃglogÖ®Ç°±ØĞëÏÈ³õÊ¼»¯¿â£¬½öĞèÖ´ĞĞÒ»´Î£¬À¨ºÅÄÚÎª³ÌĞòÃû
-    FLAGS_alsologtostderr = true;     //ÊÇ·ñ½«ÈÕÖ¾Êä³öµ½ÎÄ¼şºÍstderr
-    FLAGS_colorlogtostderr = true;    //ÊÇ·ñÆôÓÃ²»Í¬ÑÕÉ«ÏÔÊ¾
-    FLAGS_log_dir = "./logs"; //
+    google::InitGoogleLogging(argv[0]);//ä½¿ç”¨glogä¹‹å‰å¿…é¡»å…ˆåˆå§‹åŒ–åº“ï¼Œä»…éœ€æ‰§è¡Œä¸€æ¬¡ï¼Œæ‹¬å·å†…ä¸ºç¨‹åºå
+    FLAGS_alsologtostderr = true;     //æ˜¯å¦å°†æ—¥å¿—è¾“å‡ºåˆ°æ–‡ä»¶å’Œstderr
+    FLAGS_colorlogtostderr = true;    //æ˜¯å¦å¯ç”¨ä¸åŒé¢œè‰²æ˜¾ç¤º
+    FLAGS_log_dir = "../logs"; //
     // LOG(INFO) << "info";
     // LOG(WARNING) << "warning";
     // LOG(ERROR) << "error";
     /*LOG(FATAL) << "fatal";*/
 
-    int fd1 = open("./test", O_RDWR|O_CREAT|O_EXCL, 0666);
+
+    char buff1[1024];
+    char buff2[1024];
+    int ret;
+
+    int fd1 = open("./test", O_RDWR|O_TRUNC);
     if(fd1 == -1)
     {
         printf("open ./test fail!\n");
         LOG(ERROR) << "open ./test fail!";
         return fd1;
     }
+    ret = lseek(fd1, 0, SEEK_END);
 
-    google::ShutdownGoogleLogging();  //µ±Òª½áÊøglogÊ±±ØĞë¹Ø±Õ¿â£¬·ñÔò»áÄÚ´æÒç³ö
+    sprintf(buff1,"try to write the file");
+    ret = write(fd1, buff1,sizeof(buff1));
+
+    ret = lseek(fd1, 0, SEEK_SET);
+    ret = read(fd1, buff2, sizeof(buff2));
+    printf("read:%s count:%d\n", buff2, ret);
+    LOG(INFO) << buff2;
+
+    ret = close(fd1);
+
+    google::ShutdownGoogleLogging();  //å½“è¦ç»“æŸglogæ—¶å¿…é¡»å…³é—­åº“ï¼Œå¦åˆ™ä¼šå†…å­˜æº¢å‡º
     return 0;
 }

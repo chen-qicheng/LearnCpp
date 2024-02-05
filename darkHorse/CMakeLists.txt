@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
-project(HELLO)
+project(myProject)
 link_directories(../../glog-master/build)
 include_directories(./include/glog)
 # add_library(libhello main.cpp)
-add_executable(hello main.cpp)
+add_executable(myProject main.cpp)
 # target_link_libraries(hello libhello)
-target_link_libraries(hello glog)
+target_link_libraries(myProject glog)
+
+add_subdirectory(test)
